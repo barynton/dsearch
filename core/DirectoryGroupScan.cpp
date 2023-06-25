@@ -30,13 +30,14 @@ void DirectoryGroupScan::scan(const std::vector<std::filesystem::path> & fileGro
     for (auto & path : fileGroup) {
         directories.push_back(path.parent_path());
     }
+
+    std::sort(std::begin(directories), std::end(directories));
     
     for (auto & path : directories) {
         hash.update(path.string().data());
     }
 
     int64_t digest = hash.digest();
-
 
     auto & group = _directoryGroups[digest];
     if (group.directories.empty()) {
@@ -53,7 +54,6 @@ std::vector<DirectoryGroup> DirectoryGroupScan::groups() const {
     for (auto & group : _directoryGroups) {
         result.emplace_back(std::move(group.second));
         std::sort(std::begin(result.back().names), std::end(result.back().names));
-        std::sort(std::begin(result.back().directories), std::end(result.back().directories));
     }
 
     std::sort(std::begin(result), std::end(result), [](auto & l, auto & r) {
