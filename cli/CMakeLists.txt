@@ -1,12 +1,12 @@
 cmake_minimum_required(VERSION 3.22.1 FATAL_ERROR)
 
-add_executable(cli
+add_executable(dsearch
     main.cpp
 )
 
-add_dependencies(cli core)
+add_dependencies(dsearch core)
 
-target_link_libraries(cli 
+target_link_libraries(dsearch 
 PRIVATE
     core
     CONAN_PKG::cli11
