@@ -8,8 +8,10 @@
 namespace core {
 
 struct DirectoryGroup {
-    std::string names;
+    std::vector<std::string> names;
     std::vector<std::filesystem::path> directories;
+
+    friend std::ostream & operator<<(std::ostream & stream, const DirectoryGroup & group);
 };
 
 class DirectoryGroupScan {

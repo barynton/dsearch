@@ -13,7 +13,7 @@ class DirectoryScan {
 public:
     DirectoryScan(std::ostream & logStream);
 
-    std::vector<DirectoryGroup> scan(const std::filesystem::path & deirectoryPath);
+    DuplicateSearch::Groups scan(const std::filesystem::path & deirectoryPath);
 
 private:
     DuplicateSearch::Groups initialScan(const std::filesystem::path & deirectoryPath);

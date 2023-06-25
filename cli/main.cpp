@@ -2,19 +2,22 @@
 
 #include <CLI/CLI.hpp>
 
-#include "core/DriectoryScan.h"
+#include "core/DirectoryScan.h"
+#include "core/DirectoryGroupScan.h"
 
 void duplicatesSearch(const std::string & directoryPath) {
     std::cout << "Search duplicates in " << directoryPath << std::endl;
 
     core::DirectoryScan directoryScan(std::cout);
-    
-    for (auto & duplicateGroup : directoryScan.scan(directoryPath)) {
-        std::cout <<  duplicateGroup.names << ":\n";
+    auto duplicates = directoryScan.scan(directoryPath);
 
-        for (const auto & directory : duplicateGroup.directories) {
-            std::cout << "\t" << directory << "\n";
-        }
+    core::DirectoryGroupScan directoryGroupScan;
+    for (const auto & group : duplicates) {
+        directoryGroupScan.scan(group);
+    }
+
+    for (auto & group : directoryGroupScan.groups()) {
+        std::cout << group;
     }
 }
 

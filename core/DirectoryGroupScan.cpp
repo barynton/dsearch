@@ -6,6 +6,22 @@
 
 namespace core {
 
+std::ostream & operator<<(std::ostream & stream, const DirectoryGroup & group) {
+    stream << group.names.front();
+    
+    for (auto i = 1; i < group.names.size(); ++i) {
+        stream << ", " << group.names[i];
+    }    
+
+    stream << ":\n";
+
+    for (const auto & directory : group.directories) {
+        stream << "\t" << directory << "\n";
+    }
+
+    return stream;
+}
+
 void DirectoryGroupScan::scan(const std::vector<std::filesystem::path> & fileGroup) {
     HashXxh3 hash;
     std::vector<std::filesystem::path> directories;
@@ -23,10 +39,9 @@ void DirectoryGroupScan::scan(const std::vector<std::filesystem::path> & fileGro
     auto & group = _directoryGroups[digest];
     if (group.directories.empty()) {
         group.directories = directories;
-        group.names = fileGroup.front().filename();
-    } else {
-        group.names += ", " + fileGroup.front().filename().string();
-    }
+    } 
+    
+    group.names.push_back(fileGroup.front().filename());
 }
 
 std::vector<DirectoryGroup> DirectoryGroupScan::groups() const {
@@ -34,9 +49,20 @@ std::vector<DirectoryGroup> DirectoryGroupScan::groups() const {
     
     for (auto & group : _directoryGroups) {
         result.emplace_back(std::move(group.second));
+        std::sort(std::begin(result.back().names), std::end(result.back().names));
+        std::sort(std::begin(result.back().directories), std::end(result.back().directories));
     }
 
-    std::sort(std::begin(result), std::end(result), [](auto & l, auto & r) {return l.names > r.names;});
+    std::sort(std::begin(result), std::end(result), [](auto & l, auto & r) {
+        auto & left = l.names.front();
+        auto & right = r.names.front();
+        
+        if (left.size() ==  right.size()) {
+            return left < right;
+        }
+
+        return left.size() < right.size();
+    });
 
     return result;
 }

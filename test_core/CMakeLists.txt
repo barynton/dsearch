@@ -2,7 +2,7 @@ cmake_minimum_required(VERSION 3.22.1 FATAL_ERROR)
 
 add_executable(test_core
     main.cpp
-    test.cpp
+    TestDuplicateSearch.cpp
 )
 
 add_dependencies(test_core core)
