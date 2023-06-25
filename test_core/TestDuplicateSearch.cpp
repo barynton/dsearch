@@ -62,6 +62,4 @@ TEST_CASE ("TestDuplicates1") {
     }
 
     CHECK(groups.size() == 3);
-
-    // std::filesystem::remove_all(temp);
 }

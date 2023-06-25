@@ -1,6 +1,5 @@
 #include <algorithm>
 
-#include <iostream>
 #include "core/DirectoryGroupScan.h"
 
 #include "core/HashXxh3.h"
@@ -43,7 +42,6 @@ void DirectoryGroupScan::scan(const std::vector<std::filesystem::path> & fileGro
     if (group.directories.empty()) {
         group.directories = directories;
     } 
-    std::cout << "group " << fileGroup.front().filename().string() << " digest = " << digest << std::endl;
     
     group.names.push_back(fileGroup.front().filename().string());
 }
