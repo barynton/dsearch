@@ -10,7 +10,7 @@ namespace core
 class NameSearch : public IndexedSearch<std::string> {
 public:
     void process(const std::filesystem::path & filePath) override {
-        this->add(filePath.filename(), filePath);
+        this->add(filePath.filename().string(), filePath);
     }
 };
 
