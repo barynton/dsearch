@@ -41,7 +41,7 @@ void DirectoryGroupScan::scan(const std::vector<std::filesystem::path> & fileGro
         group.directories = directories;
     } 
     
-    group.names.push_back(fileGroup.front().filename());
+    group.names.push_back(fileGroup.front().filename().string());
 }
 
 std::vector<DirectoryGroup> DirectoryGroupScan::groups() const {
