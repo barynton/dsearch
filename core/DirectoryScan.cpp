@@ -19,7 +19,7 @@ DirectoryScan::DirectoryScan(std::ostream & logStream)
     _searchAlgorithms.push_back(std::make_unique<NameSearch>());
     _searchAlgorithms.push_back(std::make_unique<SizeSearch>());
     _searchAlgorithms.push_back(std::make_unique<HeadSearch>(kBlockSize, std::make_unique<FileStream>()));
-    _searchAlgorithms.push_back(std::make_unique<HashSearch>(kBlockSize*8, std::make_unique<FileStream>()));
+    _searchAlgorithms.push_back(std::make_unique<HashSearch>(kBlockSize*8, kBlockSize, std::make_unique<FileStream>()));
 }
 
 DuplicateSearch::Groups DirectoryScan::scan(const std::filesystem::path & deirectoryPath) {
