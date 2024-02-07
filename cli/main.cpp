@@ -27,8 +27,8 @@ int main(int argc, char **argv) {
 
     std::string directory = std::filesystem::current_path().string();
     std::vector<std::string> algorithms = standardAlgorithms;
-    app.add_option("-d,--directory", directory);
-    app.add_option("-als,--algorithms", algorithms);
+    app.add_option("-d,--directory", directory, "Root directory for search; default: cwd");
+    app.add_option("-a,--algorithms", algorithms, "Search algorithms: name, size, head, hash; default: 'name size head hash'");
 
     CLI11_PARSE(app, argc, argv);
 
