@@ -46,7 +46,8 @@ TEST_CASE ("Name") {
 
     CHECK(groups == expectedGroups);
 
-    std::filesystem::remove_all(temp);
+    std::error_code ec;
+    std::filesystem::remove_all(temp, ec);
 }
 
 TEST_CASE ("Size") {
@@ -73,7 +74,8 @@ TEST_CASE ("Size") {
 
     CHECK(groups == expectedGroups);
 
-    std::filesystem::remove_all(temp);
+    std::error_code ec;
+    std::filesystem::remove_all(temp, ec);
 }
 
 TEST_CASE ("Head") {
@@ -98,7 +100,8 @@ TEST_CASE ("Head") {
 
     CHECK(groups == expectedGroups);
 
-    std::filesystem::remove_all(temp);
+    std::error_code ec;
+    std::filesystem::remove_all(temp, ec);
 }
 
 TEST_CASE ("Hash") {
@@ -133,7 +136,8 @@ TEST_CASE ("Hash") {
 
     CHECK(groups == expectedGroups);
 
-    std::filesystem::remove_all(temp);
+    std::error_code ec;
+    std::filesystem::remove_all(temp, ec);
 }
 
 TEST_CASE ("StandardAlgorithmsRecurrent") {
@@ -189,5 +193,6 @@ TEST_CASE ("StandardAlgorithmsRecurrent") {
 
     CHECK(groups == expectedGroups);
 
-    std::filesystem::remove_all(temp);
+    std::error_code ec;
+    std::filesystem::remove_all(temp, ec);
 }
