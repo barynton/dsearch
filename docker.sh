@@ -2,8 +2,8 @@
 set -xe
 
 source_dir=$PWD
-container=ubuntu_builder_container
-image=ubuntu_builder
+container=dsearch_builder_container
+image=dsearch_builder
 
 function docker_create {
     docker build -t $image .
@@ -14,6 +14,7 @@ function docker_create {
     docker run -dit -v $source_dir:$source_dir --name $container $image
 }
 
+# $1 - build type
 function docker_build {
     if ! docker inspect "$container" >/dev/null 2>&1; then
         docker_create
@@ -27,19 +28,28 @@ function docker_build {
     docker exec $container /bin/bash -c "cd $source_dir && $source_dir/build.sh $build_type"
 }
 
+# $1 - build type
+# $2 - filter
 function docker_test_run {
     user=`id -u`:`id -g`
     docker start $container
     build_type=Debug
+    filter=".*"
+
     if [ "$1" != "" ] ; then
         build_type=$1
     fi 
-    docker exec $container /bin/bash -c "cd '$source_dir/build_$build_type' && ctest"
+
+    if [ "$2" != "" ] ; then
+        filter=$2
+    fi 
+
+    docker exec $container /bin/bash -c "ctest --test-dir $source_dir/build_$build_type --verbose --output-on-failure -R '$filter'"
 }
 
 function docker_test_coverage {
-    user=`id -u`:`id -g`
     docker start $container
+    docker exec $container /bin/bash -c "ctest --test-dir $source_dir/build_Debug -T test -T coverage"
     docker exec $container /bin/bash -c "cd $source_dir && $source_dir/coverage.sh"
 }
 

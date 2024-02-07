@@ -7,15 +7,13 @@ add_executable(test_core
 
 add_dependencies(test_core core)
 
-target_compile_definitions(test_core 
-PRIVATE 
--DCATCH_CONFIG_ENABLE_BENCHMARKING
-)
-
 target_link_libraries(test_core 
 PRIVATE
     core    
     CONAN_PKG::catch2
 )
 
-add_test(NAME core COMMAND test_core)
+include(Catch)
+
+#https://github.com/catchorg/Catch2/blob/devel/docs/cmake-integration.md
+catch_discover_tests(test_core)
