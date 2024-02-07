@@ -2,22 +2,23 @@
 
 #include <CLI/CLI.hpp>
 
-#include "core/DirectoryScan.h"
-#include "core/DirectoryGroupScan.h"
+#include "core/facade/FileGroupsScan.h"
 
-void duplicatesSearch(const std::string & directoryPath) {
+namespace {
+    const std::vector<std::string> standardAlgorithms = {"name", "size", "head", "hash"};
+}
+
+void duplicatesSearch(const std::string & directoryPath, const std::vector<std::string> & algorithms) {
     std::cout << "Search duplicates in " << directoryPath << std::endl;
 
-    core::DirectoryScan directoryScan(std::cout);
-    auto duplicates = directoryScan.scan(directoryPath);
+    core::FileGroupsScan fileGroupsScan(std::cout, algorithms);
+    auto duplicates = fileGroupsScan.scan(directoryPath);
 
-    core::DirectoryGroupScan directoryGroupScan;
     for (const auto & group : duplicates) {
-        directoryGroupScan.scan(group);
-    }
-
-    for (auto & group : directoryGroupScan.groups()) {
-        std::cout << group;
+        for (const auto & file : group) {
+            std::cout << file << "\n";
+        }
+        std::cout << "\n";
     }
 }
 
@@ -25,8 +26,11 @@ int main(int argc, char **argv) {
     CLI::App app{"dsearch"};
 
     std::string directory = std::filesystem::current_path().string();
-    auto duplicates = app.add_option("-d,--directory", directory);
+    std::vector<std::string> algorithms = standardAlgorithms;
+    app.add_option("-d,--directory", directory);
+    app.add_option("-als,--algorithms", algorithms);
+
     CLI11_PARSE(app, argc, argv);
 
-    duplicatesSearch(directory);
+    duplicatesSearch(directory, algorithms);
 }

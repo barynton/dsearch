@@ -1,9 +1,8 @@
 cmake_minimum_required(VERSION 3.22.1 FATAL_ERROR)
 
 add_library(core
-    DirectoryScan.cpp
-    DirectoryGroupScan.cpp
-
+    src/duplicate_search/Factory.cpp
+    src/facade/FileGroupsScan.cpp
 )
 
 target_include_directories(core 

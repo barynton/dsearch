@@ -12,11 +12,10 @@ class IndexedSearch : public DuplicateSearch {
 public:
     Groups duplicates() const override {
         Groups result;
-        std::for_each(std::begin(_duplicatesIndex), std::end(_duplicatesIndex), [&](const auto & pair) {
-            // result.emplace_back(std::move(pair.second));
+        
+        for (const auto & pair : _duplicatesIndex) {
             result.push_back(pair.second);
-
-        });
+        }
 
         return result;
     }
@@ -31,7 +30,6 @@ protected:
         auto uniqueIt = _uniquesIndex.find(key);
         
         if (std::end(_uniquesIndex) != uniqueIt) {
-            //use move?
             _duplicatesIndex[key].push_back(uniqueIt->second);
             _duplicatesIndex[key].push_back(filePath);
 

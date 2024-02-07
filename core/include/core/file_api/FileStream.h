@@ -11,7 +11,7 @@ namespace core {
 class FileStream : public FileApi {
 public:
     void open(const std::filesystem::path & filePath) override {
-        _stream = std::move(std::ifstream(filePath.c_str(), std::ios::binary)); 
+        _stream = std::ifstream(filePath.c_str(), std::ios::binary); 
 
         if (!_stream.good()) {
             throw std::runtime_error("can't open " + filePath.string());

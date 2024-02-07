@@ -2,16 +2,16 @@
 
 #include <memory>
 #include <ostream>
+#include <string>
 #include <vector>
 
-#include "core/DirectoryGroupScan.h"
 #include "core/duplicate_search/DuplicateSearch.h"
 
 namespace core {
 
-class DirectoryScan {
+class FileGroupsScan {
 public:
-    DirectoryScan(std::ostream & logStream);
+    FileGroupsScan(std::ostream & logStream, const std::vector<std::string> & algorithms);
 
     DuplicateSearch::Groups scan(const std::filesystem::path & deirectoryPath);
 

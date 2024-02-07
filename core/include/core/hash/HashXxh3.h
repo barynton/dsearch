@@ -1,7 +1,6 @@
 #include <memory>
 #include <stdexcept>
 
-// #include <xxh3.h>
 #include <xxhash.h>
 
 namespace core {
@@ -32,13 +31,13 @@ public:
         }
 
         if (XXH3_64bits_update(_state.get(), data.data(), data.size()) == XXH_ERROR) {
-            throw std::runtime_error("xx3 update error");
+            throw std::runtime_error("xx3 vector update error");
         }
     }
 
     void update(const std::string & data) {
         if (XXH3_64bits_update(_state.get(), data.data(), data.size()) == XXH_ERROR) {
-            throw std::runtime_error("xx3 update error");
+            throw std::runtime_error("xx3 string update error");
         }
     }
 
